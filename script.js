@@ -156,38 +156,61 @@ function renderMonth(year, monthIndex, elementId, holidays) {
     container.appendChild(days);
 }
 
-/* ===== RENDER 12 THÁNG ===== */
-document.addEventListener("DOMContentLoaded",()=>{
-    const root=document.getElementById("calendar-list");
+let currentMonth = 0;
 
-    months.forEach(cfg=>{
-        const page=document.createElement("section");
-        page.className="month-page";
+document.addEventListener("DOMContentLoaded", () => {
+    renderCurrentMonth();
 
-        page.innerHTML=`
-            <div class="month-banner" style="background-image:url('${cfg.banner}')">
-                <div class="banner-overlay">
-                    <p class="quote">${cfg.slogan}</p>
-                    <h3 class="subtitle">${cfg.subtitle}</h3>
-                </div>
-            </div>
-
-            <div class="month-content">
-                <div class="month-left">
-                    <h2>${cfg.title}</h2>
-                    <p class="month-text">${cfg.subtitle}</p>
-                    <img src="${cfg.zodiac}" class="zodiac">
-                </div>
-                <div class="month-right">
-                    <div id="calendar-${cfg.month}"></div>
-                    ${Object.entries(cfg.holidays).map(
-            ([d,name])=>`<div class="note">⭐ ${d.slice(8,10)}/${d.slice(5,7)}: ${name}</div>`
-        ).join("")}
-                </div>
-            </div>
-        `;
-
-        root.appendChild(page);
-        renderMonth(2026, cfg.month, `calendar-${cfg.month}`, cfg.holidays);
-    });
+    document.getElementById("nextMonth").onclick = () => changeMonth(1);
+    document.getElementById("prevMonth").onclick = () => changeMonth(-1);
 });
+
+function renderCurrentMonth(animationClass = "") {
+    const root = document.getElementById("calendar-list");
+    root.innerHTML = "";
+
+    const cfg = months[currentMonth];
+    const page = document.createElement("section");
+    page.className = `month-page ${animationClass}`;
+
+    page.innerHTML = `
+        <div class="month-banner" style="background-image:url('${cfg.banner}')">
+            <div class="banner-overlay">
+                <p class="quote">${cfg.slogan}</p>
+                <h3 class="subtitle">${cfg.subtitle}</h3>
+            </div>
+        </div>
+
+        <div class="month-content">
+            <div class="month-left">
+                <h2>${cfg.title}</h2>
+                <p class="month-text">${cfg.subtitle}</p>
+                <img src="${cfg.zodiac}" class="zodiac">
+            </div>
+            <div class="month-right">
+                <div id="calendar-${cfg.month}"></div>
+                ${Object.entries(cfg.holidays).map(
+        ([d, name]) =>
+            `<div class="note">⭐ ${d.slice(8,10)}/${d.slice(5,7)}: ${name}</div>`
+    ).join("")}
+            </div>
+        </div>
+    `;
+
+    root.appendChild(page);
+    renderMonth(2026, cfg.month, `calendar-${cfg.month}`, cfg.holidays);
+}
+
+function changeMonth(step) {
+    const oldPage = document.querySelector(".month-page");
+    if (!oldPage) return;
+
+    const anim = step === 1 ? "flip-next" : "flip-prev";
+    oldPage.classList.add(anim);
+
+    setTimeout(() => {
+        currentMonth = (currentMonth + step + months.length) % months.length;
+        renderCurrentMonth();
+    }, 600);
+}
+

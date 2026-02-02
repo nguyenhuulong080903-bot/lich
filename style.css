@@ -162,3 +162,68 @@ body {
         width: 100%;
     }
 }
+/* ===== BOOK LAYOUT ===== */
+.book-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.book {
+    perspective: 2000px;
+}
+
+/* mỗi tháng là 1 trang */
+.month-page {
+    transform-origin: left center;
+    animation-duration: 0.6s;
+    animation-fill-mode: both;
+}
+
+/* hiệu ứng lật */
+.flip-next {
+    animation-name: flipNext;
+}
+
+.flip-prev {
+    animation-name: flipPrev;
+}
+
+@keyframes flipNext {
+    from {
+        transform: rotateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: rotateY(-180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes flipPrev {
+    from {
+        transform: rotateY(180deg);
+        opacity: 0;
+    }
+    to {
+        transform: rotateY(0);
+        opacity: 1;
+    }
+}
+
+/* nút điều hướng */
+.nav-btn {
+    font-size: 28px;
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    background: #9b1c1c;
+    color: #ffd27d;
+    border-radius: 4px;
+}
+
+.nav-btn:hover {
+    background: #7c1414;
+}
+
