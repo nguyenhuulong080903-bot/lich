@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ngày lễ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="month-page">
+
+    <div class="month-banner" id="day-banner">
+        <div class="banner-overlay">
+            <p class="quote" id="day-quote"></p>
+            <h3 class="subtitle" id="day-title"></h3>
+        </div>
+    </div>
+
+    <div class="month-content">
+        <div class="month-left">
+            <h2 id="day-date"></h2>
+            <p class="month-text" id="day-name"></p>
+        </div>
+
+        <div class="month-right">
+            <p id="day-content" style="font-size:18px; line-height:1.6;"></p>
+            <br>
+            <button onclick="history.back()">← Quay lại lịch</button>
+        </div>
+    </div>
+
+</section>
+
+<script src="day.js"></script>
+</body>
+</html>
