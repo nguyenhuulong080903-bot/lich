@@ -1,4 +1,10 @@
 /* ===== DATA 12 THÁNG ===== */
+const coverPage = {
+    title: "TƯ TƯỞNG HỒ CHÍ MINH & LỊCH SỬ VIỆT NAM",
+    subtitle: "Chúc Mừng Năm Mới",
+    year: "2026",
+    banner: "bia.png" // ảnh bìa bạn gửi
+};
 const months = [
     {
         month: 0,
@@ -108,7 +114,26 @@ const months = [
         zodiac: "trau.png",
         holidays: { "2026-12-22": "Ngày thành lập QĐND Việt Nam" }
     }
-];
+];function renderCoverPage(animationClass = "") {
+    const root = document.getElementById("calendar-list");
+    root.innerHTML = "";
+
+    const page = document.createElement("section");
+    page.className = `month-page cover-page ${animationClass}`;
+
+    page.innerHTML = `
+        <div class="month-banner" style="background-image:url('${coverPage.banner}')">
+            <div class="banner-overlay">
+                <h2 style="font-size:36px">${coverPage.title}</h2>
+                <p class="quote">${coverPage.subtitle}</p>
+                <h1 style="font-size:64px; margin-top:20px">${coverPage.year}</h1>
+            </div>
+        </div>
+    `;
+
+    root.appendChild(page);
+}
+
 
 /* ===== HÀM RENDER LỊCH ===== */
 function renderMonth(year, monthIndex, elementId, holidays) {
@@ -156,7 +181,8 @@ function renderMonth(year, monthIndex, elementId, holidays) {
     container.appendChild(days);
 }
 
-let currentMonth = 0;
+
+let currentMonth = -1;
 
 document.addEventListener("DOMContentLoaded", () => {
     renderCurrentMonth();
@@ -166,6 +192,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function renderCurrentMonth(animationClass = "") {
+    if (currentMonth === -1) {
+        renderCoverPage(animationClass);
+        return;
+    }
+
     const root = document.getElementById("calendar-list");
     root.innerHTML = "";
 
@@ -201,6 +232,7 @@ function renderCurrentMonth(animationClass = "") {
     renderMonth(2026, cfg.month, `calendar-${cfg.month}`, cfg.holidays);
 }
 
+
 function changeMonth(step) {
     const oldPage = document.querySelector(".month-page");
     if (!oldPage) return;
@@ -209,8 +241,16 @@ function changeMonth(step) {
     oldPage.classList.add(anim);
 
     setTimeout(() => {
-        currentMonth = (currentMonth + step + months.length) % months.length;
+        currentMonth += step;
+
+        if (currentMonth < -1) currentMonth = months.length - 1;
+        if (currentMonth > months.length - 1) currentMonth = -1;
+
         renderCurrentMonth();
     }, 600);
 }
+page.className = `month-page cover-page ${animationClass}`;
+
+
+
 

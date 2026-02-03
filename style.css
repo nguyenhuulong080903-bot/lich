@@ -13,6 +13,7 @@ body {
 /* ====== KHUNG THÁNG ====== */
 .month-page {
     width: 1100px;
+    min-height: 780px;   /* 👈 CHỐT 1 CON SỐ */
     margin: 0 auto 60px;
     background: #f3e6cf;
     box-shadow: 0 12px 30px rgba(0,0,0,0.25);
@@ -49,8 +50,9 @@ body {
 /* ====== PHẦN DƯỚI ====== */
 .month-content {
     display: flex;
-    height: 420px;
+    min-height: 420px;  /* 👈 cho phép giãn */
 }
+
 
 .month-left {
     width: 38%;
@@ -227,4 +229,40 @@ body {
     background: #7c1414;
 }
 
+.day-content p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+    text-align: justify;
+}
+
+/* ===== COVER PAGE ===== */
+/* ===== FIX COVER FULL PAGE ===== */
+.cover-page {
+    background: none;          /* ❌ bỏ nền be */
+    overflow: hidden;
+}
+
+
+.cover-page .month-banner {
+    position: absolute;
+    inset: 0;                  /* top:0 right:0 bottom:0 left:0 */
+    height: 100%;
+    width: 100%;
+}
+
+
+.cover-page {
+    position: relative;
+}
+
+/* căn chữ chính giữa trang */
+.cover-page .banner-overlay {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+}
+.cover-page {
+    background: none !important;
+}
 
